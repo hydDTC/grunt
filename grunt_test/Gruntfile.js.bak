@@ -1,0 +1,24 @@
+//包装函数
+module.exports=function(grunt){
+	//任务配置，所有插件的配置信息
+	 grunt.initConfig({
+	   //获取package.json的信息
+	   pkg:grunt.file.readJSON('package.json'),
+	  //压缩文件
+	   uglify:{
+	     options:{
+		    stripBanners:true,
+			banner:'/*!<%-pkg.name%>*/\n'    //压缩文件的第一句注释
+		 },
+		 build:{
+		     src:'src/test.js',  //源文件
+			 dest:'src/tt.min.js'  //压缩之后要生成的文件名字
+		 }
+	   }
+	 });
+
+	 //告诉grunt我们将使用插件
+	   grunt.loadNpmTasks('grunt-contrib-uglify');
+	   //告诉grunt当我们在终端中输入grunt时需要做什么(注意先后顺序)  如果不需要压缩 就不写uglify 
+	   grunt.registerTask('default',['uglify']);
+}
